@@ -1,0 +1,5 @@
+package com.eyasu.microservices.mortgagecalculationservice.model;
+
+public class MortgageCalculation {
+
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="netflix-eureka-naming-server"/>
+<aop-project name="mortgage-calculation-service"/>
+<aop-project name="mortgage-rate-service"/>
+</aop-reference-model>

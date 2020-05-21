@@ -1,0 +1,8 @@
+package com.eyasu.microservices.mortgagerateservice.model;
+
+import org.springframework.hateoas.RepresentationModel;
+
+public class MortgagePerStateAssembler extends RepresentationModel<MortgagePerStateAssembler>{
+	
+	
+}

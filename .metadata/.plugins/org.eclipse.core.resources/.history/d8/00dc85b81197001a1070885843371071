@@ -1,0 +1,5 @@
+package com.eyasu.microservices.mortgagerateservice.model;
+
+public class MortgagePerState {
+
+}

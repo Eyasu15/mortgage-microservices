@@ -1,0 +1,78 @@
+package com.eyasu.microservices.mortgagerateservice.controllers;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.eyasu.microservices.mortgagerateservice.model.MortgagePerState;
+
+
+@RestController
+@RequestMapping("/mortgage-rates")
+public class MortgageRateController {
+
+	
+	@Autowired
+	private MortgageRateRespository repository;
+		
+	@GetMapping("")
+	public CollectionModel<MortgagePerState> showAllRates() {
+		List<MortgagePerState> rates = repository.findAll();
+		
+		Link link = linkTo(this.getClass()).withSelfRel();
+		
+		CollectionModel<MortgagePerState> model = CollectionModel.of(rates);
+		
+		for(MortgagePerState rate : rates) {
+			Link selfLink = linkTo(methodOn(this.getClass()).
+					showOneState(rate.getName())).withSelfRel();
+			rate.add(selfLink);
+		}
+		
+		model.add(link);
+		
+		return model;
+	}
+	
+	
+	@GetMapping("/state/{state}")
+	public EntityModel<MortgagePerState> showOneState(@PathVariable String state) {
+		
+		Optional<MortgagePerState> rate = repository.findById(state);
+		
+		Link link = linkTo(methodOn(this.getClass()).showAllRates()).withRel("all-rates");
+		EntityModel<MortgagePerState> model = EntityModel.of(rate.get());
+		model.add(link);
+		
+		return model;
+	}
+	
+	@PostMapping("")
+	public BodyBuilder addRate(@RequestBody MortgagePerState rate) {
+		
+		MortgagePerState rateSaved = repository.save(rate);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest()
+				.path("/{id}")
+				.buildAndExpand(rateSaved.getName()).toUri();
+		
+		return ResponseEntity.created(location);
+	}
+}

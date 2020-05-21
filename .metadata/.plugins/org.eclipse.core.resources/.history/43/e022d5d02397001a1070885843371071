@@ -1,0 +1,43 @@
+package com.eyasu.microservices.mortgagerateservice.controllers;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.eyasu.microservices.mortgagerateservice.model.MortgagePerState;
+
+
+@RestController
+@RequestMapping("/mortgage-rates")
+public class MortgageRateController {
+
+	
+	@Autowired
+	private MortgageRateRespository repository;
+		
+	@GetMapping("")
+	public List<MortgagePerState> showAllRates() {
+		
+		List<EntityModel<MortgagePerState>> rates = repository.findAll().stream()
+				.map(rate -> new EntityModel<>(rate, linkTo(methodOn(MortgageRateController.class).showOneState(rate.getName())).withSelfRel(),
+						linkTo(methodOn(MortgageRateController.class).showAllRates()).withRel("rates"))).collect(Collectors.toList());
+		
+		return new CollectionModel<>(rates, linkTo(methodOn(MortgageRateController.class)).withSelfRel());
+	}
+	
+	
+	@GetMapping("/state/{state}")
+	public MortgagePerState showOneState(@PathVariable String state) {
+//		EntityModel<MortgagePerState> entity =  new EntityModel
+		
+		
+		return repository.findById(state).get();
+	}
+}

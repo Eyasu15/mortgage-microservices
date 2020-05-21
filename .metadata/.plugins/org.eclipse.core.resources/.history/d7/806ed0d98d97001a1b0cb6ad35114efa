@@ -1,0 +1,52 @@
+package com.eyasu.microservices.mortgagerateservice.model;
+
+import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class MortgagePerState {
+
+	@Id
+	private String name;
+	private String averageRate15Years;
+	private String averageRate30Years;
+	
+	public MortgagePerState() {}
+	
+	public MortgagePerState(String name, String averageRate15Years, String averageRate30Years) {
+		super();
+		this.name = name;
+		this.averageRate15Years = averageRate15Years;
+		this.averageRate30Years = averageRate30Years;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAverageRate15Years() {
+		return averageRate15Years;
+	}
+
+	public void setAverageRate15Years(String averageRate15Years) {
+		this.averageRate15Years = averageRate15Years;
+	}
+
+	public String getAverageRate30Years() {
+		return averageRate30Years;
+	}
+
+	public void setAverageRate30Years(String averageRate30Years) {
+		this.averageRate30Years = averageRate30Years;
+	}
+	
+
+	
+
+}
