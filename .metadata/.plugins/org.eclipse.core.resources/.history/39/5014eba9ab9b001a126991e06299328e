@@ -1,0 +1,9 @@
+package com.eyasu.microservices.mortgagecalculationservice.calculate;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class MortgageRateCalculator {
+
+	
+}

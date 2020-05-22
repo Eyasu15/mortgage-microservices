@@ -1,0 +1,43 @@
+package com.eyasu.microservices.mortgagecalculationservice.controllers;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.eyasu.microservices.mortgagecalculationservice.calculate.MortgageCalculator;
+import com.eyasu.microservices.mortgagecalculationservice.model.MortgageCalculationBean;
+
+@RestController
+@RequestMapping("/mortgage-calculation")
+public class MortgageCalculationController {	
+	
+	@GetMapping("/state/{state}"
+			+ "/period/{period}"
+			+ "/principle/{principle}")
+	public MortgageCalculationBean retrieveMortgage(@PathVariable String state,
+		@PathVariable Integer period, @PathVariable Integer principle) {
+		
+		Map<String, String> uriVariables = new HashMap<>();
+		uriVariables.put("state", state);
+		
+		
+		ResponseEntity<MortgageCalculationBean> responseEntity = new RestTemplate().getForEntity("http://localhost:8000/mortgage-rates/state/{state}",
+															MortgageCalculationBean.class, uriVariables);
+		
+		MortgageCalculationBean response = responseEntity.getBody();
+		
+		String rate = response.getAverageInterestRate().substring(0, 3);
+		Float.valueOf(rate);
+		
+//		Double monthlyPayment = new MortgageCalculator(response.getPrinciple(),Float.valueOf(rate), response.getPeriod()).calculateMortgage();
+//		System.out.println(monthlyPayment);
+		
+		return response;
+	}
+}

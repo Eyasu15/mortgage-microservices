@@ -1,0 +1,62 @@
+package com.eyasu.microservices.mortgagecalculationservice.model;
+
+public class MortgageCalculationBean {
+	
+	private String state;
+	private String averageInterestRate;
+	private Integer period;
+	private Integer principal;
+	private Double monthlyPayment;
+	
+	public MortgageCalculationBean() {}
+	
+	public MortgageCalculationBean(String state, String averageInterestRate, Integer period, Double monthlyPayment) {
+		super();
+		this.state = state;
+		this.averageInterestRate = averageInterestRate;
+		this.period = period;
+		this.monthlyPayment = monthlyPayment;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getAverageInterestRate() {
+		return averageInterestRate;
+	}
+
+	public void setAverageInterestRate(String averageInterestRate) {
+		this.averageInterestRate = averageInterestRate;
+	}
+
+	public Integer getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Integer period) {
+		this.period = period;
+	}
+
+	public Double getMonthlyPayment() {
+		return monthlyPayment;
+	}
+
+	public void setMonthlyPayment(Double monthlyPayment) {
+		this.monthlyPayment = monthlyPayment;
+	}
+
+	public Integer getPrincipal() {
+		return principal;
+	}
+
+	public void setPrincipal(Integer principal) {
+		this.principal = principal;
+	}
+
+
+}

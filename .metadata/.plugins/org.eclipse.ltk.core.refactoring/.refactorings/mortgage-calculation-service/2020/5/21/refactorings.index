@@ -1,0 +1,7 @@
+1590097218232	Rename type 'MortgageRateCalculator'
+1590097772968	Rename type 'MortgageCalculationProxy'
+1590098372100	Rename type 'MortgageCalculation'
+1590098551187	Encapsulate field 'principal'
+1590103422824	Delete element
+1590104068646	Encapsulate field 'principle'
+1590109849562	Rename type 'ErroDetails'

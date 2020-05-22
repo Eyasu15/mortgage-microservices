@@ -1,0 +1,20 @@
+package com.eyasu.microservices.mortgagecalculationservice.calculate;
+
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.eyasu.microservices.mortgagecalculationservice.model.MortgageCalculationBean;
+
+@Component
+@FeignClient(name = "mortgage-rate-service")
+@RibbonClient(name = "mortgage-rate-service")
+public interface MortgageRateProxy {
+
+	@GetMapping("mortgage-rates/state/{state}")
+	public MortgageCalculationBean getMortgageRate(
+			@PathVariable("state") String state);
+
+}

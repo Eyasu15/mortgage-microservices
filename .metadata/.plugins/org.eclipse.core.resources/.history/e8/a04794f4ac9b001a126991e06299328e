@@ -1,0 +1,20 @@
+package com.eyasu.microservices.mortgagecalculationservice.calculate;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+
+@Component
+@FeignClient(name = "")
+public interface MortgageCalculationProxy {
+	@Component
+	@FeignClient(name="currency-exchange-service")
+	@RibbonClient(name="currency-exchange-service")
+	public interface CurrencyExchangeProxy {
+
+		@GetMapping("/currency-exchange/from/{from}/to/{to}")
+		public CurrencyConversionBean getCurrencyExchange(
+				@PathVariable("from") String from, 
+				@PathVariable("to") String to);
+	}
+
+}

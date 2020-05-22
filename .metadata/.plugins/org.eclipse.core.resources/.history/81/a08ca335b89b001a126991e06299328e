@@ -1,0 +1,55 @@
+package com.eyasu.microservices.mortgagecalculationservice.controllers;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.eyasu.microservices.mortgagecalculationservice.calculate.MortgageCalculator;
+import com.eyasu.microservices.mortgagecalculationservice.calculate.MortgageRateProxy;
+import com.eyasu.microservices.mortgagecalculationservice.model.MortgageCalculationBean;
+
+@RestController
+@RequestMapping("/mortgage-calculation")
+public class MortgageCalculationController {
+
+	
+	
+//	@GetMapping("/state/{state}"
+//				+ "/period/{period}"
+//				+ "/principal/{principal}")
+//	public MortgageCalculationBean retrieveMortgage(@PathVariable String state,
+//			@PathVariable Integer period, @PathVariable Integer principle) {
+//		
+//		MortgageRateProxy proxy = new MortgageRateProxy()
+//		MortgageCalculationBean mortgage = proxy.getMortgageRate(state);
+//		MortgageCalculator mortgageCalculator = new MortgageCalculator(principle, period, Integer.valueOf(mortgage.getAverageInterestRate()));
+//		Double calculatedMortgage = mortgageCalculator.calculateMortgage();
+//		
+//		mortgage.setMonthlyPayment(calculatedMortgage);
+//		
+//		return mortgage;
+//	}
+	
+	@GetMapping("")
+	public String testing() {
+		return "its working";
+	}
+	
+	@GetMapping("/state/{state}"
+			+ "/period/{period}"
+			+ "/principal/{principal}")
+	public MortgageCalculationBean retrieveMortgage(@PathVariable String state,
+		@PathVariable Integer period, @PathVariable Integer principle) {
+		
+		Map<String, String> uriVariables = new HashMap<K, V>();
+		
+		
+		new RestTemplate().getForEntity("http://localhost:8000/mortgage-rates/state/{state}", MortgageCalculationBean.class)
+	}
+}

@@ -1,0 +1,27 @@
+package com.eyasu.microservices.mortgagecalculationservice.calculate;
+
+public class MortgageCalculator {
+	  
+	private int principal;
+	private float annualInterest;
+	private Integer period;
+
+
+    public double calculateMortgage(int principal, float annualInterest, Integer period) {
+        float monthlyInterest = getMonthlyInterest();
+        float numberOfPayments = getNumberOfPayments();
+
+        return principal * (monthlyInterest * Math.pow(1 + monthlyInterest, numberOfPayments))
+                / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
+    }
+
+    private int getNumberOfPayments() {
+        return period * 12;
+    }
+
+    private float getMonthlyInterest() {
+        return annualInterest / 100 / 12;
+    }
+
+
+}
